@@ -221,6 +221,15 @@ AddEventHandler("izone:trapPlayerInZone", function(zone)
 	end
 end)
 
+AddEventHandler("izone:getZoneCenter", function(zone, cb)
+	found = FindZone(zone)
+	if not found then
+		cb(nil)
+	else
+		cb(allZone[found].center)
+	end
+end)
+
 AddEventHandler("izone:isPlayerInZone", function(zone, cb)
 	found = FindZone(zone)
 	if not found then

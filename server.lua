@@ -12,6 +12,7 @@ function fetchZone()
             zones[i].center = json.decode(zones[i].center)
         end
         allZone = zones
+        init = true
         TriggerClientEvent("izone:transfertzones", -1, allZone)
     end)
 end
@@ -52,7 +53,11 @@ end)
 RegisterNetEvent("izone:gimme")
 AddEventHandler("izone:gimme", function()
     local source = tonumber(source)
-	TriggerClientEvent("izone:transfertzones", source, allZone)
+    if not(init) then 
+        fetchZone()
+    else
+        TriggerClientEvent("izone:transfertzones", source, allZone)
+    end
 end)
 
 RegisterNetEvent("izone:saveZone")
