@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
     if debug then SetNuiFocus(false, false) end
     while true do
         Citizen.Wait(1)
-        if IsControlJustPressed(0, 38) then
+        if IsControlJustPressed(0, Config.CONTROL_TO_OPEN_PANEL) then
             if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
                 if group ~= "user" then
                     SetNuiFocus(true, true)
@@ -26,14 +26,14 @@ Citizen.CreateThread(function()
                     SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = allZone})
                 end
             end
-        elseif IsControlJustPressed(1, 182) and isInUse then
+        elseif IsControlJustPressed(0, Config.CONTROL_TO_ADD_POINT) and isInUse then
             
             local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
             TriggerEvent("izone:notification", "Point added: ".. "x = "..tostring(math.ceil(x)) .. " y = " .. tostring(math.ceil(y)) .. " z = " .. tostring(math.ceil(z)), true)
             table.insert(points, {xs = x, ys = y, zs = z})
             Wait(1000)
 
-        elseif IsControlJustPressed(1, 311) and isInUse then
+        elseif IsControlJustPressed(0, Config.CONTROL_TO_REMOVE_LAST_POINT) and isInUse then
             TriggerEvent("izone:notification", "Removed the last point", true)
             table.remove(points, #points)
             Wait(1000)
