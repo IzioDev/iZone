@@ -15,7 +15,6 @@ function fetchZone()
         TriggerClientEvent("izone:transfertzones", -1, allZone)
     end)
 end
-fetchZone()
 
 if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
     AddEventHandler('es:playerLoaded', function(source)
