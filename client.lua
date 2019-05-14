@@ -186,7 +186,7 @@ local lastInCoords = nil
 
 AddEventHandler("izone:initiateATrapZone", function(zone)
 	TriggerEvent("izone:isPlayerInZone", zone, function(isIn)
-        found = FindZone(zone)
+        local found = FindZone(zone)
         if not(found) then return end
 		if isIn then
 			lastInCoords = GetEntityCoords(GetPlayerPed(-1), true)
@@ -202,13 +202,12 @@ function TpPlayer(coords)
 end
 
 AddEventHandler("izone:trapPlayerInZone", function(zone)
-	found = FindZone(zone)
+	local found = FindZone(zone)
 	if not found or not lastInCoords then
 		return
 	else
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
-		local x1, y1, z1 = table.unpack(plyCoords)
-		if GetDistanceBetweenCoords(x1, y1, z1, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
+		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
 			local n = windPnPoly(allZone[found].points, plyCoords)
 			if n == 0 then
 				TpPlayer(lastInCoords)
@@ -222,7 +221,7 @@ AddEventHandler("izone:trapPlayerInZone", function(zone)
 end)
 
 AddEventHandler("izone:getZoneCenter", function(zone, cb)
-	found = FindZone(zone)
+	local found = FindZone(zone)
 	if not found then
 		cb(nil)
 	else
@@ -231,13 +230,12 @@ AddEventHandler("izone:getZoneCenter", function(zone, cb)
 end)
 
 AddEventHandler("izone:isPlayerInZone", function(zone, cb)
-	found = FindZone(zone)
+	local found = FindZone(zone)
 	if not found then
 		cb(nil)
 	else
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
-		local x1, y1, z1 = table.unpack(plyCoords)
-		if GetDistanceBetweenCoords(x1, y1, z1, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
+		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
 			local n = windPnPoly(allZone[found].points, plyCoords)
 			if n ~= 0 then
 				cb(true)
@@ -250,8 +248,41 @@ AddEventHandler("izone:isPlayerInZone", function(zone, cb)
 	end
 end)
 
+AddEventHandler("izone:isPlayerInCatZone", function(zone, cat, cb)
+	local found = FindZoneInCat(zone, cat)
+	if not(found) then
+		cb(nil)
+	else
+		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
+		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
+			local n = windPnPoly(allZone[found].points, plyCoords)
+			if n ~= 0 then
+				cb(true)
+			else
+				cb(false)
+			end
+		else
+			cb(false)
+		end
+	end
+end)
+
+AddEventHandler("izone:getAllZonesThePlayerIsIn", function(cb)
+	local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
+	local toReturn = {}
+	for i,v in ipairs(allZone) do
+		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.maxLength) then
+			local n = windPnPoly(v.points, plyCoords)
+			if n ~= 0 then
+				table.insert(toReturn, v)
+			end
+		end
+	end
+	cb(toReturn)
+end)
+
 AddEventHandler("izone:isPointInZone", function(xr, yr, zone, cb)
-	found = FindZone(zone)
+	local found = FindZone(zone)
 	if not found then
 		cb(nil)
 	else
@@ -318,4 +349,13 @@ function FindZone(zone)
 		end
 	end
 	return false
+end
+
+function FindZoneInCat(zone, cat)
+	for i = 1, #allZone do
+		if allZone[i].name == zone and allZone[i].cat == cat then
+			return i
+		end
+	end
+return false
 end
