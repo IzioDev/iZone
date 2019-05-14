@@ -45,6 +45,39 @@ end)
 ```
 `TriggerEvent("izone:isPlayerInZone", "zone1", cb(val))` -> val can be either false, true or nil. nil if the zone doesn't exist.
 
+### Know if a player is in a zone with a categorie name:
+```lua
+Citizen.CreateThread(function()
+    while true do
+        Wait(100)
+        TriggerEvent("izone:isPlayerInCatZone", "foot", "field1", function(isIn)
+            print(isIn)
+        end)
+    end
+end)
+```
+
+### Return all zone the player is in:
+```lua
+Citizen.CreateThread(function()
+    while true do
+        Wait(100)
+        TriggerEvent("izone:getAllZonesThePlayerIsIn", function(zones)
+            print(json.encode(zones))
+        end)
+    end
+end)
+```
+Note: This return `{}` if there is no zone. Else the format is:
+```lua
+    zones = {
+        {name = "", cat = "", center = {x = 1, y = 2}, ...},
+        {name = "", cat = "", center = {x = 1, y = 2}, ...},
+        {name = "", cat = "", center = {x = 1, y = 2}, ...}
+    }
+```
+I'm not sure about performence tho.
+
 ### Trap a player in a zone:
 First initiate the trap (it teleport the player in the zone if the player isn't in there already):
 ```lua
@@ -54,5 +87,7 @@ Then stuck him to the zone (call every tick or every 100 ms, your call):
 ```lua
 TriggerEvent("izone:trapPlayerInZone", "zone1")
 ```
+
+
 
 ### See examples in example.lua
