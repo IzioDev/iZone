@@ -290,6 +290,7 @@ AddEventHandler("izone:isPlayerInAtLeastInOneZoneInCat", function(cat, cb)
 			local n = windPnPoly(v.points, plyCoords)
 			if n ~= 0 then
 				cb(true)
+				return
 			end
 		end
 	end
