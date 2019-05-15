@@ -57,6 +57,18 @@ Citizen.CreateThread(function()
 end)
 ```
 
+### Know if a player in at least one zone in a given categorie:
+```lua
+Citizen.CreateThread(function()
+    while true do
+        Wait(100)
+        TriggerEvent("izone:isPlayerInAtLeastInOneZoneInCat", "mySuperCat", function(isIn)
+            print(isIn)
+        end)
+    end
+end)
+```
+
 ### Return all zone the player is in:
 ```lua
 Citizen.CreateThread(function()

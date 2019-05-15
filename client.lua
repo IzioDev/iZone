@@ -281,6 +281,21 @@ AddEventHandler("izone:getAllZonesThePlayerIsIn", function(cb)
 	cb(toReturn)
 end)
 
+AddEventHandler("izone:isPlayerInAtLeastInOneZoneInCat", cat, function(cb)
+	local zonesToTest = GetAllZoneInCat(cat)
+	local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
+
+	for i,v in ipairs(zonesToTest) do
+		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.maxLength) then
+			local n = windPnPoly(v.points, plyCoords)
+			if n ~= 0 then
+				cb(true)
+			end
+		end
+	end
+	cb(false)
+end)
+
 AddEventHandler("izone:isPointInZone", function(xr, yr, zone, cb)
 	local found = FindZone(zone)
 	if not found then
@@ -357,5 +372,15 @@ function FindZoneInCat(zone, cat)
 			return i
 		end
 	end
-return false
+	return false
+end
+
+function GetAllZoneInCat(cat)
+	local toBeReturned = {}
+	for i = 1, #allZone do
+		if allZone[i].cat == cat then
+			table.insert(toBeReturned, allZone[i])
+		end
+	end
+	return toBeReturned
 end
