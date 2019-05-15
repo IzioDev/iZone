@@ -281,7 +281,7 @@ AddEventHandler("izone:getAllZonesThePlayerIsIn", function(cb)
 	cb(toReturn)
 end)
 
-AddEventHandler("izone:isPlayerInAtLeastInOneZoneInCat", cat, function(cb)
+AddEventHandler("izone:isPlayerInAtLeastInOneZoneInCat", function(cat, cb)
 	local zonesToTest = GetAllZoneInCat(cat)
 	local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
 
