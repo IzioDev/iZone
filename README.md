@@ -27,6 +27,8 @@ Download this repo:
 
 `git clone https://github.com/izio38/iZone.git`, or click the download button.
 
+**If you have any issue with the cursor not disappearing**: Make sure to name the resource: `izone`.
+
 Execute `zones.sql` on your MySQL server.
 
 ## How to use it?
