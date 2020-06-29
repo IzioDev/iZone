@@ -125,9 +125,9 @@ function ceilPoints(points)
     local _points = {}
     for i,v in ipairs(points) do
         table.insert(_points, {
-            x = math.ceil(v.xs*100)/100,
-            y = math.ceil(v.ys*100)/100,
-            z = math.ceil(v.zs*100)/100
+            x = math.ceil(v.x*100)/100,
+            y = math.ceil(v.y*100)/100,
+            z = math.ceil(v.z*100)/100
         })
     end
     return _points

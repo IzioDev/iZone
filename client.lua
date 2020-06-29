@@ -2,55 +2,62 @@ local debug = true
 local group
 local isAuthorizedToOpenPanel = false
 local isInUse = false
+local isSpectatingAZone = false
 local points = {}
 local Zones = {}
 
 Citizen.CreateThread(function()
-    -- not being stuck on relaod
-		TriggerServerEvent("izone:requestZones")
+	-- not being stuck on relaod
+	TriggerServerEvent("izone:requestZones")
 
-    if debug then SetNuiFocus(false, false) end
-    while true do
-        Citizen.Wait(1)
-        if IsControlJustPressed(0, Config.CONTROL_TO_OPEN_PANEL) then
-            if isAuthorizedToOpenPanel then
-							SetNuiFocus(true, true)
-							SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = Zones})
-            end
-        elseif IsControlJustPressed(0, Config.CONTROL_TO_ADD_POINT) and isInUse then
-            
-            local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
-            TriggerEvent("izone:notification", "Point added: ".. "x = "..tostring(math.ceil(x)) .. " y = " .. tostring(math.ceil(y)) .. " z = " .. tostring(math.ceil(z)), true)
-            table.insert(points, {xs = x, ys = y, zs = z})
-            Wait(1000)
+	if debug then SetNuiFocus(false, false) end
+		
+	while true do
+		Citizen.Wait(1)
 
-        elseif IsControlJustPressed(0, Config.CONTROL_TO_REMOVE_LAST_POINT) and isInUse then
-            TriggerEvent("izone:notification", "Removed the last point", true)
-            table.remove(points, #points)
-            Wait(1000)
-        end
+		if IsControlJustPressed(0, Config.CONTROL_TO_OPEN_PANEL) then
 
-        if #points > 0 then
+			if isAuthorizedToOpenPanel then
+				SetNuiFocus(true, true)
+				SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = Zones})
+			end
+
+		elseif IsControlJustPressed(0, Config.CONTROL_TO_ADD_POINT) and isInUse then
+
+			local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+			TriggerEvent("izone:notification", "Point added: ".. "x = "..tostring(math.ceil(x)) .. " y = " .. tostring(math.ceil(y)) .. " z = " .. tostring(math.ceil(z)), true)
+			table.insert(points, {x = x, y = y, z = z})
+			Wait(1000)
+
+		elseif IsControlJustPressed(0, Config.CONTROL_TO_REMOVE_LAST_POINT) and isInUse then
+
+			TriggerEvent("izone:notification", "Removed the last point", true)
+			table.remove(points, #points)
+			Wait(1000)
+
+		end
+
+		if #points > 0 then
 			for i = 1, #points do
-				DrawMarker(0, points[i].xs, points[i].ys, points[i].zs, 0, 0, 0, 0, 0, 0, 0.1, 0.1, 3.0, 46, 89, 227, 230, 0, 0, 0,0)
-				draw3DText(points[i].xs, points[i].ys, points[i].zs + 2.01 , "Point ~r~" .. i, 1, 0.5, 0.5)
+				DrawMarker(0, points[i].x, points[i].y, points[i].z, 0, 0, 0, 0, 0, 0, 0.1, 0.1, 3.0, 46, 89, 227, 230, 0, 0, 0,0)
+				draw3DText(points[i].x, points[i].y, points[i].z + 2.01 , "Point ~r~" .. i, 1, 0.5, 0.5)
 			end
 		end
 
 		if #points > 1 then
 			for i = 1, #points do
 				if i ~= #points then
-					DrawLine(points[i].xs, points[i].ys, points[i].zs, points[i+1].xs, points[i+1].ys, points[i+1].zs, 244, 34, 35, 230)
+					DrawLine(points[i].x, points[i].y, points[i].z, points[i+1].x, points[i+1].y, points[i+1].z, 244, 34, 35, 230)
 				else
-					DrawLine(points[i].xs, points[i].ys, points[i].zs, points[1].xs, points[1].ys, points[1].zs, 244, 34, 35, 230)
+					DrawLine(points[i].x, points[i].y, points[i].z, points[1].x, points[1].y, points[1].z, 244, 34, 35, 230)
 				end
 			end
-        end
+		end
 
-        if isInUse then
-            HelpPromt("Add a point : ~INPUT_CELLPHONE_CAMERA_FOCUS_LOCK~ \nRemove last point: ~INPUT_REPLAY_SHOWHOTKEY~")
-        end 
-    end
+		if isInUse then
+			HelpPromt("Add a point : ~INPUT_CELLPHONE_CAMERA_FOCUS_LOCK~ \nRemove last point: ~INPUT_REPLAY_SHOWHOTKEY~")
+		end 
+	end
 end)
 
 RegisterNetEvent("izone:refreshClientZones")
@@ -73,12 +80,27 @@ RegisterNUICallback('stop', function(data, cb)
     points = {}
 end)
 
+RegisterNUICallback('showZone', function(data, cb)
+	if isInUse then
+		return TriggerEvent("izone:notification", "Error: you can't see a zone while creating one", 0)
+	end
+
+	points = data.points
+	isSpectatingAZone = true
+	SendNUIMessage({refreshState = true, isSpectatingAZone = isSpectatingAZone, zoneId = data.id})
+end)
+
+RegisterNUICallback('unshowZone', function(data, cb)
+	points = {}
+	isSpectatingAZone = false
+	SendNUIMessage({refreshState = true, isSpectatingAZone = isSpectatingAZone})
+end)
 
 RegisterNUICallback('error', function(data, cb)
 	TriggerEvent("izone:notification", "Error: ".. data.message, 0)
 end)
 
-RegisterNUICallback('checkSsave', function(data, cb)
+RegisterNUICallback('checkSave', function(data, cb)
     SetNuiFocus(false, false)
     if (data.error) then
         TriggerEvent("izone:notification", "Error: You need to have 3 points or more to save.", 0)
@@ -98,8 +120,10 @@ RegisterNUICallback('create', function(data, cb)
     SetNuiFocus(false, false)
     if (isInUse) then
         TriggerEvent("izone:notification", "already in use", 0)
-    else
-        isInUse = true
+		else
+				isSpectatingAZone = false
+				isInUse = true
+				points = {}
     end
 end)
 

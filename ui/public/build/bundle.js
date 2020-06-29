@@ -1872,12 +1872,12 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[18] = list[i];
-    	child_ctx[20] = i;
+    	child_ctx[21] = list[i];
+    	child_ctx[23] = i;
     	return child_ctx;
     }
 
-    // (214:0) {#if displayMenu}
+    // (225:0) {#if displayMenu}
     function create_if_block$1(ctx) {
     	let div3;
     	let p0;
@@ -1911,8 +1911,8 @@ var app = (function () {
     	let dispose;
 
     	function select_block_type(ctx, dirty) {
-    		if (/*isInUse*/ ctx[2]) return create_if_block_4;
-    		return create_else_block;
+    		if (/*isInUse*/ ctx[2]) return create_if_block_5;
+    		return create_else_block_1;
     	}
 
     	let current_block_type = select_block_type(ctx);
@@ -1962,38 +1962,38 @@ var app = (function () {
     			t18 = space();
     			if (if_block3) if_block3.c();
     			attr_dev(i0, "class", "material-icons center red clickable md-48 svelte-r8vz9m");
-    			add_location(i0, file$3, 216, 6, 4396);
+    			add_location(i0, file$3, 227, 6, 4677);
     			attr_dev(p0, "class", "close svelte-r8vz9m");
-    			add_location(p0, file$3, 215, 4, 4355);
+    			add_location(p0, file$3, 226, 4, 4636);
     			attr_dev(p1, "class", "infos svelte-r8vz9m");
-    			add_location(p1, file$3, 218, 4, 4472);
+    			add_location(p1, file$3, 229, 4, 4753);
     			attr_dev(p2, "class", "title svelte-r8vz9m");
-    			add_location(p2, file$3, 219, 4, 4508);
+    			add_location(p2, file$3, 230, 4, 4789);
     			attr_dev(hr, "class", "infos-sep svelte-r8vz9m");
-    			add_location(hr, file$3, 220, 4, 4545);
+    			add_location(hr, file$3, 231, 4, 4826);
     			attr_dev(i1, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i1, file$3, 224, 10, 4696);
+    			add_location(i1, file$3, 235, 10, 4977);
     			attr_dev(p3, "id", "manage");
     			attr_dev(p3, "class", "item-menu svelte-r8vz9m");
-    			add_location(p3, file$3, 223, 8, 4629);
+    			add_location(p3, file$3, 234, 8, 4910);
     			attr_dev(i2, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i2, file$3, 243, 10, 5380);
+    			add_location(i2, file$3, 254, 10, 5661);
     			attr_dev(p4, "id", "help");
     			attr_dev(p4, "class", "item-menu svelte-r8vz9m");
-    			add_location(p4, file$3, 242, 8, 5315);
+    			add_location(p4, file$3, 253, 8, 5596);
     			attr_dev(i3, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i3, file$3, 247, 10, 5524);
+    			add_location(i3, file$3, 258, 10, 5805);
     			attr_dev(p5, "id", "about");
     			attr_dev(p5, "class", "item-menu svelte-r8vz9m");
-    			add_location(p5, file$3, 246, 8, 5458);
+    			add_location(p5, file$3, 257, 8, 5739);
     			attr_dev(div0, "class", "menu svelte-r8vz9m");
-    			add_location(div0, file$3, 222, 6, 4602);
+    			add_location(div0, file$3, 233, 6, 4883);
     			attr_dev(div1, "class", "display svelte-r8vz9m");
-    			add_location(div1, file$3, 251, 6, 5614);
+    			add_location(div1, file$3, 262, 6, 5895);
     			attr_dev(div2, "class", "content svelte-r8vz9m");
-    			add_location(div2, file$3, 221, 4, 4574);
+    			add_location(div2, file$3, 232, 4, 4855);
     			attr_dev(div3, "class", "main-container svelte-r8vz9m");
-    			add_location(div3, file$3, 214, 2, 4322);
+    			add_location(div3, file$3, 225, 2, 4603);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -2031,10 +2031,10 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(p0, "click", /*close*/ ctx[4], false, false, false),
-    					listen_dev(p3, "click", /*switchTabTo*/ ctx[6], false, false, false),
-    					listen_dev(p4, "click", /*switchTabTo*/ ctx[6], false, false, false),
-    					listen_dev(p5, "click", /*switchTabTo*/ ctx[6], false, false, false)
+    					listen_dev(p0, "click", /*close*/ ctx[5], false, false, false),
+    					listen_dev(p3, "click", /*switchTabTo*/ ctx[7], false, false, false),
+    					listen_dev(p4, "click", /*switchTabTo*/ ctx[7], false, false, false),
+    					listen_dev(p5, "click", /*switchTabTo*/ ctx[7], false, false, false)
     				];
 
     				mounted = true;
@@ -2103,15 +2103,15 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(214:0) {#if displayMenu}",
+    		source: "(225:0) {#if displayMenu}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (237:8) {:else}
-    function create_else_block(ctx) {
+    // (248:8) {:else}
+    function create_else_block_1(ctx) {
     	let p;
     	let i;
     	let t1;
@@ -2125,10 +2125,10 @@ var app = (function () {
     			i.textContent = "add_circle";
     			t1 = text("\n            Create Zone");
     			attr_dev(i, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i, file$3, 238, 12, 5206);
+    			add_location(i, file$3, 249, 12, 5487);
     			attr_dev(p, "id", "add");
     			attr_dev(p, "class", "item-menu svelte-r8vz9m");
-    			add_location(p, file$3, 237, 10, 5141);
+    			add_location(p, file$3, 248, 10, 5422);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -2136,7 +2136,7 @@ var app = (function () {
     			append_dev(p, t1);
 
     			if (!mounted) {
-    				dispose = listen_dev(p, "click", /*createZone*/ ctx[9], false, false, false);
+    				dispose = listen_dev(p, "click", /*createZone*/ ctx[10], false, false, false);
     				mounted = true;
     			}
     		},
@@ -2150,17 +2150,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_else_block.name,
+    		id: create_else_block_1.name,
     		type: "else",
-    		source: "(237:8) {:else}",
+    		source: "(248:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (228:8) {#if isInUse}
-    function create_if_block_4(ctx) {
+    // (239:8) {#if isInUse}
+    function create_if_block_5(ctx) {
     	let p0;
     	let i0;
     	let t1;
@@ -2183,15 +2183,15 @@ var app = (function () {
     			i1.textContent = "save";
     			t4 = text("\n            Save Zone");
     			attr_dev(i0, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i0, file$3, 229, 12, 4873);
+    			add_location(i0, file$3, 240, 12, 5154);
     			attr_dev(p0, "id", "add");
     			attr_dev(p0, "class", "item-menu svelte-r8vz9m");
-    			add_location(p0, file$3, 228, 10, 4810);
+    			add_location(p0, file$3, 239, 10, 5091);
     			attr_dev(i1, "class", "material-icons center svelte-r8vz9m");
-    			add_location(i1, file$3, 233, 12, 5036);
+    			add_location(i1, file$3, 244, 12, 5317);
     			attr_dev(p1, "id", "add");
     			attr_dev(p1, "class", "item-menu svelte-r8vz9m");
-    			add_location(p1, file$3, 232, 10, 4973);
+    			add_location(p1, file$3, 243, 10, 5254);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p0, anchor);
@@ -2204,8 +2204,8 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(p0, "click", /*stopZone*/ ctx[10], false, false, false),
-    					listen_dev(p1, "click", /*saveZone*/ ctx[11], false, false, false)
+    					listen_dev(p0, "click", /*stopZone*/ ctx[11], false, false, false),
+    					listen_dev(p1, "click", /*saveZone*/ ctx[13], false, false, false)
     				];
 
     				mounted = true;
@@ -2223,16 +2223,16 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_4.name,
+    		id: create_if_block_5.name,
     		type: "if",
-    		source: "(228:8) {#if isInUse}",
+    		source: "(239:8) {#if isInUse}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (254:8) {#if currentDisp == 'manage'}
+    // (265:8) {#if currentDisp == 'manage'}
     function create_if_block_3(ctx) {
     	let div;
     	let h2;
@@ -2250,8 +2250,10 @@ var app = (function () {
     	let t9;
     	let td4;
     	let t11;
+    	let td5;
+    	let t13;
     	let tbody;
-    	let each_value = /*zones*/ ctx[3];
+    	let each_value = /*zones*/ ctx[4];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -2278,11 +2280,14 @@ var app = (function () {
     			td2.textContent = "Center";
     			t7 = space();
     			td3 = element("td");
-    			td3.textContent = "TP";
+    			td3.textContent = "Show";
     			t9 = space();
     			td4 = element("td");
-    			td4.textContent = "Delete";
+    			td4.textContent = "TP";
     			t11 = space();
+    			td5 = element("td");
+    			td5.textContent = "Delete";
+    			t13 = space();
     			tbody = element("tbody");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -2290,25 +2295,27 @@ var app = (function () {
     			}
 
     			attr_dev(h2, "class", "svelte-r8vz9m");
-    			add_location(h2, file$3, 255, 12, 5777);
+    			add_location(h2, file$3, 266, 12, 6058);
     			attr_dev(td0, "class", "svelte-r8vz9m");
-    			add_location(td0, file$3, 259, 18, 5895);
+    			add_location(td0, file$3, 270, 18, 6176);
     			attr_dev(td1, "class", "svelte-r8vz9m");
-    			add_location(td1, file$3, 260, 18, 5932);
+    			add_location(td1, file$3, 271, 18, 6213);
     			attr_dev(td2, "class", "svelte-r8vz9m");
-    			add_location(td2, file$3, 261, 18, 5964);
+    			add_location(td2, file$3, 272, 18, 6245);
     			attr_dev(td3, "class", "svelte-r8vz9m");
-    			add_location(td3, file$3, 262, 18, 5998);
+    			add_location(td3, file$3, 273, 18, 6279);
     			attr_dev(td4, "class", "svelte-r8vz9m");
-    			add_location(td4, file$3, 263, 18, 6028);
-    			add_location(tr, file$3, 258, 16, 5872);
+    			add_location(td4, file$3, 274, 18, 6311);
+    			attr_dev(td5, "class", "svelte-r8vz9m");
+    			add_location(td5, file$3, 275, 18, 6341);
+    			add_location(tr, file$3, 269, 16, 6153);
     			attr_dev(thead, "class", "svelte-r8vz9m");
-    			add_location(thead, file$3, 257, 14, 5848);
-    			add_location(tbody, file$3, 266, 14, 6103);
+    			add_location(thead, file$3, 268, 14, 6129);
+    			add_location(tbody, file$3, 278, 14, 6416);
     			attr_dev(table, "class", "center svelte-r8vz9m");
-    			add_location(table, file$3, 256, 12, 5811);
+    			add_location(table, file$3, 267, 12, 6092);
     			attr_dev(div, "class", "center svelte-r8vz9m");
-    			add_location(div, file$3, 254, 10, 5744);
+    			add_location(div, file$3, 265, 10, 6025);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -2326,7 +2333,9 @@ var app = (function () {
     			append_dev(tr, td3);
     			append_dev(tr, t9);
     			append_dev(tr, td4);
-    			append_dev(table, t11);
+    			append_dev(tr, t11);
+    			append_dev(tr, td5);
+    			append_dev(table, t13);
     			append_dev(table, tbody);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -2334,8 +2343,8 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*zones, deleteRequested, tpToSelected, Math*/ 392) {
-    				each_value = /*zones*/ ctx[3];
+    			if (dirty & /*zones, deleteRequested, tpToSelected, showZone, zoneId, Math*/ 4888) {
+    				each_value = /*zones*/ ctx[4];
     				validate_each_argument(each_value);
     				let i;
 
@@ -2368,49 +2377,119 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(254:8) {#if currentDisp == 'manage'}",
+    		source: "(265:8) {#if currentDisp == 'manage'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (268:16) {#each zones as zone, i}
+    // (299:24) {:else}
+    function create_else_block(ctx) {
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("visibility");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(299:24) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (297:24) {#if zoneId === zone.id}
+    function create_if_block_4(ctx) {
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("visibility_off");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_4.name,
+    		type: "if",
+    		source: "(297:24) {#if zoneId === zone.id}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (280:16) {#each zones as zone, i}
     function create_each_block(ctx) {
     	let tr;
     	let td0;
-    	let t0_value = /*zone*/ ctx[18].cat + "";
+    	let t0_value = /*zone*/ ctx[21].cat + "";
     	let t0;
     	let t1;
     	let td1;
-    	let t2_value = /*zone*/ ctx[18].name + "";
+    	let t2_value = /*zone*/ ctx[21].name + "";
     	let t2;
     	let t3;
     	let td2;
     	let t4;
-    	let t5_value = Math.ceil(/*zone*/ ctx[18].center.x) + "";
+    	let t5_value = Math.ceil(/*zone*/ ctx[21].center.x) + "";
     	let t5;
     	let t6;
-    	let t7_value = Math.ceil(/*zone*/ ctx[18].center.y) + "";
+    	let t7_value = Math.ceil(/*zone*/ ctx[21].center.y) + "";
     	let t7;
     	let t8;
-    	let t9_value = Math.ceil(/*zone*/ ctx[18].center.z) + "";
+    	let t9_value = Math.ceil(/*zone*/ ctx[21].center.z) + "";
     	let t9;
     	let t10;
     	let td3;
     	let i0;
     	let i0_id_value;
-    	let t12;
+    	let t11;
     	let td4;
     	let i1;
-    	let t13;
     	let i1_id_value;
+    	let t13;
+    	let td5;
+    	let i2;
     	let t14;
+    	let i2_id_value;
+    	let t15;
     	let mounted;
     	let dispose;
 
+    	function select_block_type_1(ctx, dirty) {
+    		if (/*zoneId*/ ctx[3] === /*zone*/ ctx[21].id) return create_if_block_4;
+    		return create_else_block;
+    	}
+
+    	let current_block_type = select_block_type_1(ctx);
+    	let if_block = current_block_type(ctx);
+
     	function click_handler(...args) {
-    		return /*click_handler*/ ctx[14](/*zone*/ ctx[18], ...args);
+    		return /*click_handler*/ ctx[16](/*zone*/ ctx[21], ...args);
+    	}
+
+    	function click_handler_1(...args) {
+    		return /*click_handler_1*/ ctx[17](/*zone*/ ctx[21], ...args);
     	}
 
     	const block = {
@@ -2432,29 +2511,38 @@ var app = (function () {
     			t10 = space();
     			td3 = element("td");
     			i0 = element("i");
-    			i0.textContent = "play_arrow";
-    			t12 = space();
+    			if_block.c();
+    			t11 = space();
     			td4 = element("td");
     			i1 = element("i");
-    			t13 = text("delete_forever");
-    			t14 = space();
+    			i1.textContent = "play_arrow";
+    			t13 = space();
+    			td5 = element("td");
+    			i2 = element("i");
+    			t14 = text("delete_forever");
+    			t15 = space();
     			attr_dev(td0, "class", "svelte-r8vz9m");
-    			add_location(td0, file$3, 269, 20, 6195);
+    			add_location(td0, file$3, 282, 20, 6546);
     			attr_dev(td1, "class", "svelte-r8vz9m");
-    			add_location(td1, file$3, 270, 20, 6235);
+    			add_location(td1, file$3, 284, 20, 6620);
     			attr_dev(td2, "class", "svelte-r8vz9m");
-    			add_location(td2, file$3, 271, 20, 6276);
-    			attr_dev(i0, "id", i0_id_value = /*i*/ ctx[20]);
+    			add_location(td2, file$3, 286, 20, 6697);
+    			attr_dev(i0, "id", i0_id_value = /*i*/ ctx[23]);
     			attr_dev(i0, "class", "material-icons center clickable md-48 svelte-r8vz9m");
-    			add_location(i0, file$3, 276, 22, 6488);
+    			add_location(i0, file$3, 292, 22, 6943);
     			attr_dev(td3, "class", "svelte-r8vz9m");
-    			add_location(td3, file$3, 275, 20, 6461);
-    			attr_dev(i1, "id", i1_id_value = /*zone*/ ctx[18].id);
-    			attr_dev(i1, "class", "material-icons center red clickable md-48 svelte-r8vz9m");
-    			add_location(i1, file$3, 284, 22, 6776);
+    			add_location(td3, file$3, 291, 20, 6916);
+    			attr_dev(i1, "id", i1_id_value = /*i*/ ctx[23]);
+    			attr_dev(i1, "class", "material-icons center clickable md-48 svelte-r8vz9m");
+    			add_location(i1, file$3, 305, 22, 7425);
     			attr_dev(td4, "class", "svelte-r8vz9m");
-    			add_location(td4, file$3, 283, 20, 6749);
-    			add_location(tr, file$3, 268, 18, 6170);
+    			add_location(td4, file$3, 304, 20, 7398);
+    			attr_dev(i2, "id", i2_id_value = /*zone*/ ctx[21].id);
+    			attr_dev(i2, "class", "material-icons center red clickable md-48 svelte-r8vz9m");
+    			add_location(i2, file$3, 314, 22, 7749);
+    			attr_dev(td5, "class", "svelte-r8vz9m");
+    			add_location(td5, file$3, 313, 20, 7722);
+    			add_location(tr, file$3, 280, 18, 6483);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -2474,16 +2562,21 @@ var app = (function () {
     			append_dev(tr, t10);
     			append_dev(tr, td3);
     			append_dev(td3, i0);
-    			append_dev(tr, t12);
+    			if_block.m(i0, null);
+    			append_dev(tr, t11);
     			append_dev(tr, td4);
     			append_dev(td4, i1);
-    			append_dev(i1, t13);
-    			append_dev(tr, t14);
+    			append_dev(tr, t13);
+    			append_dev(tr, td5);
+    			append_dev(td5, i2);
+    			append_dev(i2, t14);
+    			append_dev(tr, t15);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(i0, "click", /*tpToSelected*/ ctx[7], false, false, false),
-    					listen_dev(i1, "click", click_handler, false, false, false)
+    					listen_dev(i0, "click", click_handler, false, false, false),
+    					listen_dev(i1, "click", /*tpToSelected*/ ctx[8], false, false, false),
+    					listen_dev(i2, "click", click_handler_1, false, false, false)
     				];
 
     				mounted = true;
@@ -2491,18 +2584,29 @@ var app = (function () {
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if (dirty & /*zones*/ 8 && t0_value !== (t0_value = /*zone*/ ctx[18].cat + "")) set_data_dev(t0, t0_value);
-    			if (dirty & /*zones*/ 8 && t2_value !== (t2_value = /*zone*/ ctx[18].name + "")) set_data_dev(t2, t2_value);
-    			if (dirty & /*zones*/ 8 && t5_value !== (t5_value = Math.ceil(/*zone*/ ctx[18].center.x) + "")) set_data_dev(t5, t5_value);
-    			if (dirty & /*zones*/ 8 && t7_value !== (t7_value = Math.ceil(/*zone*/ ctx[18].center.y) + "")) set_data_dev(t7, t7_value);
-    			if (dirty & /*zones*/ 8 && t9_value !== (t9_value = Math.ceil(/*zone*/ ctx[18].center.z) + "")) set_data_dev(t9, t9_value);
+    			if (dirty & /*zones*/ 16 && t0_value !== (t0_value = /*zone*/ ctx[21].cat + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*zones*/ 16 && t2_value !== (t2_value = /*zone*/ ctx[21].name + "")) set_data_dev(t2, t2_value);
+    			if (dirty & /*zones*/ 16 && t5_value !== (t5_value = Math.ceil(/*zone*/ ctx[21].center.x) + "")) set_data_dev(t5, t5_value);
+    			if (dirty & /*zones*/ 16 && t7_value !== (t7_value = Math.ceil(/*zone*/ ctx[21].center.y) + "")) set_data_dev(t7, t7_value);
+    			if (dirty & /*zones*/ 16 && t9_value !== (t9_value = Math.ceil(/*zone*/ ctx[21].center.z) + "")) set_data_dev(t9, t9_value);
 
-    			if (dirty & /*zones*/ 8 && i1_id_value !== (i1_id_value = /*zone*/ ctx[18].id)) {
-    				attr_dev(i1, "id", i1_id_value);
+    			if (current_block_type !== (current_block_type = select_block_type_1(ctx))) {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(i0, null);
+    				}
+    			}
+
+    			if (dirty & /*zones*/ 16 && i2_id_value !== (i2_id_value = /*zone*/ ctx[21].id)) {
+    				attr_dev(i2, "id", i2_id_value);
     			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(tr);
+    			if_block.d();
     			mounted = false;
     			run_all(dispose);
     		}
@@ -2512,14 +2616,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(268:16) {#each zones as zone, i}",
+    		source: "(280:16) {#each zones as zone, i}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (299:8) {#if currentDisp == 'help'}
+    // (329:8) {#if currentDisp == 'help'}
     function create_if_block_2(ctx) {
     	let div;
     	let h2;
@@ -2585,26 +2689,26 @@ var app = (function () {
     			span4 = element("span");
     			span4.textContent = "Stop Zone Creation";
     			attr_dev(h2, "class", "svelte-r8vz9m");
-    			add_location(h2, file$3, 300, 12, 7259);
+    			add_location(h2, file$3, 330, 12, 8232);
     			attr_dev(span0, "class", "orange svelte-r8vz9m");
-    			add_location(span0, file$3, 304, 16, 7387);
-    			add_location(li0, file$3, 302, 14, 7322);
+    			add_location(span0, file$3, 334, 16, 8360);
+    			add_location(li0, file$3, 332, 14, 8295);
     			attr_dev(span1, "class", "orange svelte-r8vz9m");
-    			add_location(span1, file$3, 309, 16, 7544);
-    			add_location(li1, file$3, 307, 14, 7485);
+    			add_location(span1, file$3, 339, 16, 8517);
+    			add_location(li1, file$3, 337, 14, 8458);
     			attr_dev(span2, "class", "orange svelte-r8vz9m");
-    			add_location(span2, file$3, 314, 16, 7745);
-    			add_location(li2, file$3, 312, 14, 7679);
+    			add_location(span2, file$3, 344, 16, 8718);
+    			add_location(li2, file$3, 342, 14, 8652);
     			attr_dev(span3, "class", "orange svelte-r8vz9m");
-    			add_location(span3, file$3, 319, 16, 7897);
-    			add_location(li3, file$3, 317, 14, 7832);
+    			add_location(span3, file$3, 349, 16, 8870);
+    			add_location(li3, file$3, 347, 14, 8805);
     			attr_dev(span4, "class", "orange svelte-r8vz9m");
-    			add_location(span4, file$3, 325, 16, 8148);
-    			add_location(li4, file$3, 323, 14, 8074);
+    			add_location(span4, file$3, 355, 16, 9121);
+    			add_location(li4, file$3, 353, 14, 9047);
     			attr_dev(ul, "class", "help-list");
-    			add_location(ul, file$3, 301, 12, 7285);
+    			add_location(ul, file$3, 331, 12, 8258);
     			attr_dev(div, "class", "center container svelte-r8vz9m");
-    			add_location(div, file$3, 299, 10, 7216);
+    			add_location(div, file$3, 329, 10, 8189);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -2644,14 +2748,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(299:8) {#if currentDisp == 'help'}",
+    		source: "(329:8) {#if currentDisp == 'help'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (332:8) {#if currentDisp == 'about'}
+    // (362:8) {#if currentDisp == 'about'}
     function create_if_block_1$1(ctx) {
     	let div;
     	let h2;
@@ -2698,20 +2802,20 @@ var app = (function () {
     			span3.textContent = "suggest new features";
     			t13 = text("\n              !");
     			attr_dev(h2, "class", "svelte-r8vz9m");
-    			add_location(h2, file$3, 333, 12, 8355);
+    			add_location(h2, file$3, 363, 12, 9328);
     			attr_dev(span0, "class", "orange svelte-r8vz9m");
-    			add_location(span0, file$3, 335, 14, 8400);
-    			add_location(p0, file$3, 334, 12, 8382);
+    			add_location(span0, file$3, 365, 14, 9373);
+    			add_location(p0, file$3, 364, 12, 9355);
     			attr_dev(span1, "class", "orange svelte-r8vz9m");
-    			add_location(span1, file$3, 342, 14, 8702);
-    			add_location(p1, file$3, 340, 12, 8655);
+    			add_location(span1, file$3, 372, 14, 9675);
+    			add_location(p1, file$3, 370, 12, 9628);
     			attr_dev(span2, "class", "orange svelte-r8vz9m");
-    			add_location(span2, file$3, 348, 14, 8915);
+    			add_location(span2, file$3, 378, 14, 9888);
     			attr_dev(span3, "class", "orange svelte-r8vz9m");
-    			add_location(span3, file$3, 350, 14, 8990);
-    			add_location(p2, file$3, 346, 12, 8870);
+    			add_location(span3, file$3, 380, 14, 9963);
+    			add_location(p2, file$3, 376, 12, 9843);
     			attr_dev(div, "class", "center container svelte-r8vz9m");
-    			add_location(div, file$3, 332, 10, 8312);
+    			add_location(div, file$3, 362, 10, 9285);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -2742,7 +2846,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(332:8) {#if currentDisp == 'about'}",
+    		source: "(362:8) {#if currentDisp == 'about'}",
     		ctx
     	});
 
@@ -2768,7 +2872,7 @@ var app = (function () {
     			insert_dev(target, if_block_anchor, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(window, "message", /*handleMessage*/ ctx[5], false, false, false);
+    				dispose = listen_dev(window, "message", /*handleMessage*/ ctx[6], false, false, false);
     				mounted = true;
     			}
     		},
@@ -2820,6 +2924,7 @@ var app = (function () {
     	let { currentDisp = "help" } = $$props;
     	let { isInUse = false } = $$props;
     	let { points = [] } = $$props;
+    	let { zoneId = null } = $$props;
     	const debug = false;
     	let { zones = [] } = $$props;
 
@@ -2832,12 +2937,14 @@ var app = (function () {
     		if (event.data.openMenu) {
     			$$invalidate(0, displayMenu = true);
     			$$invalidate(2, isInUse = event.data.isInUse);
-    			$$invalidate(12, points = event.data.points);
-    			$$invalidate(3, zones = event.data.zones);
+    			$$invalidate(14, points = event.data.points);
+    			$$invalidate(4, zones = event.data.zones);
     		} else if (event.data.openPrompt) {
     			openZoneNamePrompt();
     		} else if (event.data.refreshZones) {
-    			$$invalidate(3, zones = event.data.zones);
+    			$$invalidate(4, zones = event.data.zones);
+    		} else if (event.data.refreshState) {
+    			$$invalidate(3, zoneId = event.data.zoneId);
     		}
     	}
 
@@ -2889,16 +2996,24 @@ var app = (function () {
     		$$invalidate(0, displayMenu = false);
     	}
 
+    	function showZone(zone) {
+    		if (zone.id === zoneId) {
+    			return postRequest("unshowZone", {});
+    		}
+
+    		postRequest("showZone", { points: zone.points, id: zone.id });
+    	}
+
     	function saveZone(val) {
 
     		if (points.length <= 2) {
     			postRequest("checkSave", { error: true });
     		} else {
-    			postRequest("checkSsave", { error: false });
+    			postRequest("checkSave", { error: false });
     		}
     	}
 
-    	const writable_props = ["displayMenu", "currentDisp", "isInUse", "points", "zones"];
+    	const writable_props = ["displayMenu", "currentDisp", "isInUse", "points", "zoneId", "zones"];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Content> was created with unknown prop '${key}'`);
@@ -2906,14 +3021,16 @@ var app = (function () {
 
     	let { $$slots = {}, $$scope } = $$props;
     	validate_slots("Content", $$slots, []);
-    	const click_handler = zone => deleteRequested(zone);
+    	const click_handler = zone => showZone(zone);
+    	const click_handler_1 = zone => deleteRequested(zone);
 
     	$$self.$set = $$props => {
     		if ("displayMenu" in $$props) $$invalidate(0, displayMenu = $$props.displayMenu);
     		if ("currentDisp" in $$props) $$invalidate(1, currentDisp = $$props.currentDisp);
     		if ("isInUse" in $$props) $$invalidate(2, isInUse = $$props.isInUse);
-    		if ("points" in $$props) $$invalidate(12, points = $$props.points);
-    		if ("zones" in $$props) $$invalidate(3, zones = $$props.zones);
+    		if ("points" in $$props) $$invalidate(14, points = $$props.points);
+    		if ("zoneId" in $$props) $$invalidate(3, zoneId = $$props.zoneId);
+    		if ("zones" in $$props) $$invalidate(4, zones = $$props.zones);
     	};
 
     	$$self.$capture_state = () => ({
@@ -2926,6 +3043,7 @@ var app = (function () {
     		currentDisp,
     		isInUse,
     		points,
+    		zoneId,
     		debug,
     		zones,
     		postRequest,
@@ -2937,6 +3055,7 @@ var app = (function () {
     		deleteRequested,
     		createZone,
     		stopZone,
+    		showZone,
     		saveZone
     	});
 
@@ -2944,8 +3063,9 @@ var app = (function () {
     		if ("displayMenu" in $$props) $$invalidate(0, displayMenu = $$props.displayMenu);
     		if ("currentDisp" in $$props) $$invalidate(1, currentDisp = $$props.currentDisp);
     		if ("isInUse" in $$props) $$invalidate(2, isInUse = $$props.isInUse);
-    		if ("points" in $$props) $$invalidate(12, points = $$props.points);
-    		if ("zones" in $$props) $$invalidate(3, zones = $$props.zones);
+    		if ("points" in $$props) $$invalidate(14, points = $$props.points);
+    		if ("zoneId" in $$props) $$invalidate(3, zoneId = $$props.zoneId);
+    		if ("zones" in $$props) $$invalidate(4, zones = $$props.zones);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -2956,6 +3076,7 @@ var app = (function () {
     		displayMenu,
     		currentDisp,
     		isInUse,
+    		zoneId,
     		zones,
     		close,
     		handleMessage,
@@ -2964,10 +3085,12 @@ var app = (function () {
     		deleteRequested,
     		createZone,
     		stopZone,
+    		showZone,
     		saveZone,
     		points,
     		debug,
-    		click_handler
+    		click_handler,
+    		click_handler_1
     	];
     }
 
@@ -2979,9 +3102,10 @@ var app = (function () {
     			displayMenu: 0,
     			currentDisp: 1,
     			isInUse: 2,
-    			points: 12,
-    			debug: 13,
-    			zones: 3
+    			points: 14,
+    			zoneId: 3,
+    			debug: 15,
+    			zones: 4
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -3024,8 +3148,16 @@ var app = (function () {
     		throw new Error("<Content>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
+    	get zoneId() {
+    		throw new Error("<Content>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set zoneId(value) {
+    		throw new Error("<Content>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
     	get debug() {
-    		return this.$$.ctx[13];
+    		return this.$$.ctx[15];
     	}
 
     	set debug(value) {

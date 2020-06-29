@@ -9,6 +9,8 @@
   export let currentDisp = "help";
   export let isInUse = false;
   export let points = [];
+  export let zoneId = null;
+
   export const debug = false;
 
   export let zones = [];
@@ -35,6 +37,8 @@
       openZoneNamePrompt();
     } else if (event.data.refreshZones) {
       zones = event.data.zones;
+    } else if (event.data.refreshState) {
+      zoneId = event.data.zoneId
     }
   }
 
@@ -88,6 +92,13 @@
     displayMenu = false;
   }
 
+  function showZone(zone) {
+    if (zone.id === zoneId) {
+      return postRequest("unshowZone", {});
+    }
+    postRequest("showZone", {points: zone.points, id: zone.id});
+  }
+
   function saveZone(val) {
     // bypass the check
     if (debug) {
@@ -97,7 +108,7 @@
     if (points.length <= 2) {
       postRequest("checkSave", { error: true });
     } else {
-      postRequest("checkSsave", { error: false });
+      postRequest("checkSave", { error: false });
     }
   }
 
@@ -260,6 +271,7 @@
                   <td>Categorie</td>
                   <td>Name</td>
                   <td>Center</td>
+                  <td>Show</td>
                   <td>TP</td>
                   <td>Delete</td>
                 </tr>
@@ -267,12 +279,29 @@
               <tbody>
                 {#each zones as zone, i}
                   <tr>
+                    <!-- Category -->
                     <td>{zone.cat}</td>
+                    <!-- Name -->
                     <td>{zone.name}</td>
+                    <!-- Center -->
                     <td>
                       x: {Math.ceil(zone.center.x)} y: {Math.ceil(zone.center.y)}
                       z: {Math.ceil(zone.center.z)}
                     </td>
+                    <!-- Show -->
+                    <td>
+                      <i
+                        on:click={() => showZone(zone)}
+                        id={i}
+                        class="material-icons center clickable md-48">
+                        {#if zoneId === zone.id}
+                          visibility_off
+                        {:else}
+                          visibility
+                        {/if}
+                      </i>
+                    </td>
+                    <!-- TP -->
                     <td>
                       <i
                         on:click={tpToSelected}
@@ -281,6 +310,7 @@
                         play_arrow
                       </i>
                     </td>
+                    <!-- Delete -->
                     <td>
                       <i
                         on:click={() => deleteRequested(zone)}
