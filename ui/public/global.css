@@ -13,6 +13,22 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+h1,h2,h3,h4,h5 {
+	font-family: 'Exo 2', Roboto;
+}
+
+.help-list {
+	text-align: left;
+}
+
+.help-list > li {
+	margin-bottom: 10px;
+}
+
+.item-menu, p.infos, p.title {
+	font-family: 'Exo 2', Roboto;
+}
+
 a {
 	color: rgb(0,100,200);
 	text-decoration: none;
