@@ -1,30 +1,21 @@
 local debug = true
 local group
-local admin = false
+local isAuthorizedToOpenPanel = false
 local isInUse = false
 local points = {}
-local allZone = {}
+local Zones = {}
 
 Citizen.CreateThread(function()
     -- not being stuck on relaod
-    TriggerServerEvent("izone:gimme")
-    if (not(Config.USE_ESSENTIALMODE_ADMIN_SYSTEM)) then
-        TriggerServerEvent("izone:admin")
-    end
+		TriggerServerEvent("izone:requestZones")
+
     if debug then SetNuiFocus(false, false) end
     while true do
         Citizen.Wait(1)
         if IsControlJustPressed(0, Config.CONTROL_TO_OPEN_PANEL) then
-            if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
-                if group ~= "user" then
-                    SetNuiFocus(true, true)
-                    SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = allZone})
-                end
-            else
-                if admin then
-                    SetNuiFocus(true, true)
-                    SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = allZone})
-                end
+            if isAuthorizedToOpenPanel then
+							SetNuiFocus(true, true)
+							SendNUIMessage({openMenu = true, isInUse = isInUse, points = points, zones = Zones})
             end
         elseif IsControlJustPressed(0, Config.CONTROL_TO_ADD_POINT) and isInUse then
             
@@ -58,27 +49,14 @@ Citizen.CreateThread(function()
 
         if isInUse then
             HelpPromt("Add a point : ~INPUT_CELLPHONE_CAMERA_FOCUS_LOCK~ \nRemove last point: ~INPUT_REPLAY_SHOWHOTKEY~")
-        end
-        
+        end 
     end
 end)
 
-if (not(Config.USE_ESSENTIALMODE_ADMIN_SYSTEM)) then
-    AddEventHandler("playerSpawned", function()
-        TriggerServerEvent("izone:gimme")
-        TriggerServerEvent("izone:admin")
-    end)
-
-    RegisterNetEvent("izone:okadmin")
-    AddEventHandler("izone:okadmin", function()
-        admin = true
-    end)
-end
-
-RegisterNetEvent("izone:transfertzones")
-AddEventHandler("izone:transfertzones", function(zones)
-    print(#zones)
-    allZone = zones
+RegisterNetEvent("izone:refreshClientZones")
+AddEventHandler("izone:refreshClientZones", function(zones, _isAuthorizedToOpenPanel)
+	isAuthorizedToOpenPanel = _isAuthorizedToOpenPanel
+	Zones = zones
 end)
 
 RegisterNUICallback('close', function(data, cb)
@@ -191,7 +169,7 @@ AddEventHandler("izone:initiateATrapZone", function(zone)
 		if isIn then
 			lastInCoords = GetEntityCoords(GetPlayerPed(-1), true)
 		else
-            TpPlayer(allZone[found].center)
+            TpPlayer(Zones[found].center)
             lastInCoords = GetEntityCoords(GetPlayerPed(-1), true)
 		end
 	end)
@@ -207,8 +185,8 @@ AddEventHandler("izone:trapPlayerInZone", function(zone)
 		return
 	else
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
-		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
-			local n = windPnPoly(allZone[found].points, plyCoords)
+		if GetDistanceBetweenCoords(plyCoords, tonumber(Zones[found].center.x), tonumber(Zones[found].center.y), 1.01, false) < tonumber(Zones[found].max_length) then
+			local n = windPnPoly(Zones[found].points, plyCoords)
 			if n == 0 then
 				TpPlayer(lastInCoords)
 			else
@@ -225,7 +203,7 @@ AddEventHandler("izone:getZoneCenter", function(zone, cb)
 	if not found then
 		cb(nil)
 	else
-		cb(allZone[found].center)
+		cb(Zones[found].center)
 	end
 end)
 
@@ -235,8 +213,8 @@ AddEventHandler("izone:isPlayerInZone", function(zone, cb)
 		cb(nil)
 	else
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
-		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
-			local n = windPnPoly(allZone[found].points, plyCoords)
+		if GetDistanceBetweenCoords(plyCoords, tonumber(Zones[found].center.x), tonumber(Zones[found].center.y), 1.01, false) < tonumber(Zones[found].max_length) then
+			local n = windPnPoly(Zones[found].points, plyCoords)
 			if n ~= 0 then
 				cb(true)
 			else
@@ -254,8 +232,8 @@ AddEventHandler("izone:isPlayerInCatZone", function(zone, cat, cb)
 		cb(nil)
 	else
 		local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
-		if GetDistanceBetweenCoords(plyCoords, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
-			local n = windPnPoly(allZone[found].points, plyCoords)
+		if GetDistanceBetweenCoords(plyCoords, tonumber(Zones[found].center.x), tonumber(Zones[found].center.y), 1.01, false) < tonumber(Zones[found].max_length) then
+			local n = windPnPoly(Zones[found].points, plyCoords)
 			if n ~= 0 then
 				cb(true)
 			else
@@ -267,11 +245,11 @@ AddEventHandler("izone:isPlayerInCatZone", function(zone, cat, cb)
 	end
 end)
 
-AddEventHandler("izone:getAllZonesThePlayerIsIn", function(cb)
+AddEventHandler("izone:getZonessThePlayerIsIn", function(cb)
 	local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
 	local toReturn = {}
-	for i,v in ipairs(allZone) do
-		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.maxLength) then
+	for i,v in ipairs(Zones) do
+		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.max_length) then
 			local n = windPnPoly(v.points, plyCoords)
 			if n ~= 0 then
 				table.insert(toReturn, v)
@@ -282,11 +260,11 @@ AddEventHandler("izone:getAllZonesThePlayerIsIn", function(cb)
 end)
 
 AddEventHandler("izone:isPlayerInAtLeastInOneZoneInCat", function(cat, cb)
-	local zonesToTest = GetAllZoneInCat(cat)
+	local zonesToTest = GetZonesInCat(cat)
 	local plyCoords = GetEntityCoords(GetPlayerPed(-1), true)
 
 	for i,v in ipairs(zonesToTest) do
-		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.maxLength) then
+		if GetDistanceBetweenCoords(plyCoords, tonumber(v.center.x), tonumber(v.center.y), 1.01, false) < tonumber(v.max_length) then
 			local n = windPnPoly(v.points, plyCoords)
 			if n ~= 0 then
 				cb(true)
@@ -303,8 +281,8 @@ AddEventHandler("izone:isPointInZone", function(xr, yr, zone, cb)
 		cb(nil)
 	else
 		local flag = { x = tonumber(xr), y = tonumber(yr)}
-		if GetDistanceBetweenCoords(xr, yr, 1.01, tonumber(allZone[found].center.x), tonumber(allZone[found].center.y), 1.01, false) < tonumber(allZone[found].maxLength) then
-			local n = windPnPoly(allZone[found].points, flag)
+		if GetDistanceBetweenCoords(xr, yr, 1.01, tonumber(Zones[found].center.x), tonumber(Zones[found].center.y), 1.01, false) < tonumber(Zones[found].max_length) then
+			local n = windPnPoly(Zones[found].points, flag)
 			if n ~= 0 then
 				cb(true)
 			else
@@ -359,8 +337,8 @@ function IsLeft(p1s, p2s, flag)
 end
 
 function FindZone(zone)
-	for i = 1, #allZone do
-		if allZone[i].name == zone then
+	for i = 1, #Zones do
+		if Zones[i].name == zone then
 			return i
 		end
 	end
@@ -368,19 +346,19 @@ function FindZone(zone)
 end
 
 function FindZoneInCat(zone, cat)
-	for i = 1, #allZone do
-		if allZone[i].name == zone and allZone[i].cat == cat then
+	for i = 1, #Zones do
+		if Zones[i].name == zone and Zones[i].cat == cat then
 			return i
 		end
 	end
 	return false
 end
 
-function GetAllZoneInCat(cat)
+function GetZonesInCat(cat)
 	local toBeReturned = {}
-	for i = 1, #allZone do
-		if allZone[i].cat == cat then
-			table.insert(toBeReturned, allZone[i])
+	for i = 1, #Zones do
+		if Zones[i].cat == cat then
+			table.insert(toBeReturned, Zones[i])
 		end
 	end
 	return toBeReturned

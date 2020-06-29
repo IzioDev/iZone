@@ -1,62 +1,68 @@
-local allZone = {}
-local init = false
+local Zones = nil
 
-AddEventHandler("onMySQLReady", function()
-    fetchZone()
-end)
-
-function fetchZone()
-    MySQL.Async.fetchAll('SELECT * FROM zones', {}, function(zones)
-        for i,v in ipairs(zones) do
-            zones[i].points = json.decode(zones[i].points)
-            zones[i].center = json.decode(zones[i].center)
-        end
-        allZone = zones
-        init = true
-        TriggerClientEvent("izone:transfertzones", -1, allZone)
-    end)
-end
-
-if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
-    AddEventHandler('es:playerLoaded', function(source)
-        local source = tonumber(source)
-        TriggerClientEvent("izone:transfertzones", source, allZone)
-    end)
-end
-
-if (not(Config.USE_ESSENTIALMODE_ADMIN_SYSTEM)) then
-    RegisterNetEvent("izone:admin")
-    AddEventHandler("izone:admin", function()
-        local _source = source
-        local steamID = GetPlayerIdentifiers(_source)[1] or false
-        for i,v in ipairs(Config.ADMINS) do
-            if steamID == v then
-                TriggerClientEvent("izone:okadmin", _source)
-                return
+function isPlayerAuthorized(source)
+    if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
+        -- Fetch the user and check permissions
+        TriggerEvent('es:getPlayerFromId', source, function(user)
+            if user and user.getPermissions() > Config.ESSENTIALMODE_PERMISSION_LEVEL_REQUIRED then
+                return true
+            end
+            return false
+        end)
+    else  
+        for _,authorizedIdentifier in ipairs(Config.ADMINS) do
+            for _,playerIdentifier in ipairs(GetPlayerIdentifiers(source)) do
+                if playerIdentifier == authorizedIdentifier then
+                    return true
+                end
             end
         end
+        return false
+    end
+end
+
+function fetchZone()
+    MySQL.ready(function()
+        MySQL.Async.fetchAll('SELECT * FROM zones', {}, function(zones)
+            for i,v in ipairs(zones) do
+                zones[i].points = json.decode(zones[i].points)
+                zones[i].center = json.decode(zones[i].center)
+            end
+            Zones = zones
+
+            for i,playerServerId in ipairs(GetPlayers()) do
+                TriggerClientEvent("izone:refreshClientZones", playerServerId, Zones, isPlayerAuthorized(playerServerId))
+            end
+        end)
     end)
 end
+fetchZone()
 
 RegisterNetEvent("izone:deleteZone")
 AddEventHandler("izone:deleteZone", function(id)
-    print(id)
-    local source = tonumber(source)
-    MySQL.Async.execute("DELETE FROM zones WHERE id=@id", {
-        ['@id']=id
-    }, function(res)
-        TriggerClientEvent("izone:notification", source, "Successfully deleted the zone")
-        fetchZone()
-    end)
+    if (isPlayerAuthorized(source)) then
+        local source = tonumber(source)
+        MySQL.Async.execute("DELETE FROM zones WHERE id=@id", {
+            ['@id']=id
+        }, function(res)
+            TriggerClientEvent("izone:notification", source, "Successfully deleted the zone")
+            fetchZone()
+        end)
+    else
+        if Config.ENABLE_UNAUTHORIZE_WARNING_LOGS then
+            printUnauthorizedLogForPlayer()
+        end
+    end
 end)
 
-RegisterNetEvent("izone:gimme")
-AddEventHandler("izone:gimme", function()
-    local source = tonumber(source)
-    if not(init) then 
+RegisterNetEvent("izone:requestZones")
+AddEventHandler("izone:requestZones", function()
+    -- still not initialized
+    if Zones == nil then 
         fetchZone()
     else
-        TriggerClientEvent("izone:transfertzones", source, allZone)
+        print("from request Zone " .. tostring(isPlayerAuthorized(source)))
+        TriggerClientEvent("izone:refreshClientZones", source, Zones, isPlayerAuthorized(source))
     end
 end)
 
@@ -64,14 +70,14 @@ RegisterNetEvent("izone:saveZone")
 AddEventHandler("izone:saveZone", function(points, name, cat)
     local source = source
     local points = ceilPoints(points)
-    local serialized_points = json.encode(points)
+    local encodedPoints = json.encode(points)
     local center = getCenter(points)
-    local serialized_center = json.encode(center)
+    local encodedCenter = json.encode(center)
     local maxLength = getMaxLength(points, center)
-    MySQL.Async.execute("INSERT INTO zones (points, center, maxLength, name, cat) VALUES (@points, @center, @maxLength, @name, @cat)", {
-        ['@points']=serialized_points,
-        ['@center']=serialized_center,
-        ['@maxLength']=maxLength,
+    MySQL.Async.execute("INSERT INTO zones (points, center, max_length, name, cat) VALUES (@points, @center, @max_length, @name, @cat)", {
+        ['@points']=encodedPoints,
+        ['@center']=encodedCenter,
+        ['@max_length']=maxLength,
         ['@name']=name,
         ['@cat']=cat
     }, function(res)
