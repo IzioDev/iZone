@@ -57,6 +57,10 @@ RegisterNetEvent("izone:refreshClientZones")
 AddEventHandler("izone:refreshClientZones", function(zones, _isAuthorizedToOpenPanel)
 	isAuthorizedToOpenPanel = _isAuthorizedToOpenPanel
 	Zones = zones
+
+	if (isAuthorizedToOpenPanel) then
+		SendNUIMessage({refreshZones = true, zones = Zones})
+	end
 end)
 
 RegisterNUICallback('close', function(data, cb)
@@ -85,7 +89,6 @@ RegisterNUICallback('checkSsave', function(data, cb)
 end)
 
 RegisterNUICallback('save', function(data, cb)
-    SetNuiFocus(false, false)
     isInUse = false
     TriggerServerEvent("izone:saveZone", points, data.name, data.cat)
     points = {}
