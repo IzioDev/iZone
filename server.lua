@@ -1,7 +1,20 @@
 local Zones = nil
+ESX = nil
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 function isPlayerAuthorized(source)
-    if (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
+    if (Config.USE_ESX_ADMIN_SYSTEM) then
+        -- Fetch the user and check permissions
+        local xPlayer = ESX.GetPlayerFromId(source)
+        local plyGroup = xPlayer.getGroup()
+        
+        for i = 1, #Config.ESX_GROUPS_ENABLED, 1 do
+            if Config.ESX_GROUPS_ENABLED[i] == plyGroup then
+                return true
+            end
+        end
+    elseif (Config.USE_ESSENTIALMODE_ADMIN_SYSTEM) then
         -- Fetch the user and check permissions
         TriggerEvent('es:getPlayerFromId', source, function(user)
             if user and user.getPermissions() > Config.ESSENTIALMODE_PERMISSION_LEVEL_REQUIRED then
@@ -17,8 +30,9 @@ function isPlayerAuthorized(source)
                 end
             end
         end
-        return false
     end
+
+    return false
 end
 
 function fetchZone()

@@ -43,7 +43,7 @@
   }
 
   function switchTabTo(val) {
-    currentDisp = val.toElement.id;
+    currentDisp = val.target.id;
   }
 
   function openZoneNamePrompt() {
@@ -62,7 +62,7 @@
   }
 
   function tpToSelected(val) {
-    let id = val.toElement.id;
+    let id = val.target.id;
     let coords = zones[id].center;
     postRequest("tp", coords);
     displayMenu = false;
